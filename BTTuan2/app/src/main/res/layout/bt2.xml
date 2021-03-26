@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:text="Type Phone Number Here"
+    />
+
+    <EditText
+        android:id="@+id/phone_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#111"
+        android:inputType="phone"
+    />
+
+    <Button
+        android:id="@+id/call_btn"
+        android:text="Call"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:lines="1"
+        android:padding="10px"
+        android:layout_gravity="center"
+    />
+</LinearLayout>
