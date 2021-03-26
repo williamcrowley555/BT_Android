@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TempConverter</string>
+    <string name="Convert">Chuyển Đổi</string>
+    <string name="CtoF">Từ độ C sang độ F</string>
+    <string name="FtoC">Từ độ F sang độ C</string>
+    <string name="Button">Đổi</string>
+</resources>
