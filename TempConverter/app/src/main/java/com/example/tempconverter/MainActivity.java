@@ -2,7 +2,9 @@ package com.example.tempconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioCtoF;
     RadioButton radioFtoC;
     String history = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         radioCtoF = findViewById(R.id.radio_CtoF);
         radioFtoC = findViewById(R.id.radio_FtoC);
         convert.setOnClickListener(clickConvertListener);
-
     }
 
     private final View.OnClickListener clickConvertListener = new View.OnClickListener(){
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 result = (float) ((Float.parseFloat(input.getText().toString())  * 9.0 / 5.0) + 32.0);
                 history += "C to F "+ input.getText().toString() +" => "+ result +" \n";
                 output.setText(String.valueOf(result));
+
                 histories.setText(history);
             } else if (radioFtoC.isChecked())
             {
@@ -50,4 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+
 }
