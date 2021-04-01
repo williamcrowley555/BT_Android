@@ -32,6 +32,7 @@
             android:layout_marginTop="1dp"
             tools:context=".MainActivity"
             android:background="@drawable/border_set"
+            android:id="@+id/taco"
             >
 
 
@@ -42,7 +43,7 @@
                 android:src="@drawable/logo" />
 
             <TextView
-                android:id="@+id/brand_name"
+                android:id="@+id/taco_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/imgTaco"
@@ -54,10 +55,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/taco_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/brand_name"
+                android:layout_below="@id/taco_name"
                 android:layout_toRightOf="@id/imgTaco"
                 android:paddingLeft="16dp"
                 android:text="$5.00"
@@ -76,31 +77,31 @@
 
 
             <ImageView
-                android:id="@+id/imgTaco"
+                android:id="@+id/imgPizza"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
                 android:src="@drawable/pizza" />
 
             <TextView
-                android:id="@+id/brand_name"
+                android:id="@+id/pizza_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/imgTaco"
+                android:layout_toRightOf="@id/imgPizza"
                 android:paddingLeft="16dp"
                 android:paddingBottom="8dp"
-                android:text="Taco Pronto"
+                android:text="Pizza Caronila"
                 android:textAllCaps="true"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/pizza_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/brand_name"
-                android:layout_toRightOf="@id/imgTaco"
+                android:layout_below="@id/pizza_name"
+                android:layout_toRightOf="@id/imgPizza"
                 android:paddingLeft="16dp"
-                android:text="$5.00"
+                android:text="$8.00"
                 android:textAppearance="?android:textAppearanceLarge" />
         </RelativeLayout>
 
@@ -116,31 +117,31 @@
 
 
             <ImageView
-                android:id="@+id/imgTaco"
+                android:id="@+id/imgBurito"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/burito" />
 
             <TextView
-                android:id="@+id/brand_name"
+                android:id="@+id/burito_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/imgTaco"
+                android:layout_toRightOf="@id/imgBurito"
                 android:paddingLeft="16dp"
                 android:paddingBottom="8dp"
-                android:text="Taco Pronto"
+                android:text="Burito"
                 android:textAllCaps="true"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/burito_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/brand_name"
-                android:layout_toRightOf="@id/imgTaco"
+                android:layout_below="@id/burito_name"
+                android:layout_toRightOf="@id/imgBurito"
                 android:paddingLeft="16dp"
-                android:text="$5.00"
+                android:text="$6.00"
                 android:textAppearance="?android:textAppearanceLarge" />
         </RelativeLayout>
         <RelativeLayout
@@ -155,31 +156,31 @@
 
 
             <ImageView
-                android:id="@+id/imgTaco"
+                android:id="@+id/imgSandwich"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/sandwich" />
 
             <TextView
-                android:id="@+id/brand_name"
+                android:id="@+id/sandwich_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/imgTaco"
+                android:layout_toRightOf="@id/imgSandwich"
                 android:paddingLeft="16dp"
                 android:paddingBottom="8dp"
-                android:text="Taco Pronto"
+                android:text="Sandwich"
                 android:textAllCaps="true"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/sandwich_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/brand_name"
-                android:layout_toRightOf="@id/imgTaco"
+                android:layout_below="@id/sandwich_name"
+                android:layout_toRightOf="@id/imgSandwich"
                 android:paddingLeft="16dp"
-                android:text="$5.00"
+                android:text="$5.99"
                 android:textAppearance="?android:textAppearanceLarge" />
         </RelativeLayout>
 
