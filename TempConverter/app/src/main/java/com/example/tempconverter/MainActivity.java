@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     EditText histories;
     RadioButton radioCtoF;
     RadioButton radioFtoC;
+    RadioGroup group;
     String history = "";
 
     @Override
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             float result = 0F;
             if(radioCtoF.isChecked())
             {
+
                 result = (float) ((Float.parseFloat(input.getText().toString())  * 9.0 / 5.0) + 32.0);
                 history += "C to F "+ input.getText().toString() +" => "+ result +" \n";
                 output.setText(String.valueOf(result));
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 histories.setText(history);
             } else if (radioFtoC.isChecked())
             {
+
                 result = (float) ((Float.parseFloat(input.getText().toString()) -32.0) * 5.0 / 9.0);
                 history += "F to C "+ input.getText().toString() +" => "+ result +" \n";
                 output.setText(String.valueOf(result));
