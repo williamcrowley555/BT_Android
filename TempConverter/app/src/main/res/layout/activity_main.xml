@@ -21,7 +21,6 @@
         app:layout_constraintBottom_toTopOf="@+id/radio_CtoF"
         app:layout_constraintStart_toStartOf="@+id/radio_CtoF" />
 
-
     <RadioButton
         android:id="@+id/radio_CtoF"
         android:layout_width="0dp"
