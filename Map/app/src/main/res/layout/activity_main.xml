@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone">
+    </EditText>
+
+    <EditText
+        android:id="@+id/mess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine">
+    </EditText>
+    <CheckBox
+        android:id="@+id/checkbox_id1"
+        android:text="Java"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/checkbox_id2"
+        android:text="Android"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Order">
+    </Button>
+
+    <Button
+    android:id="@+id/cb"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Map">
+    </Button>
+
+    <EditText
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine">
+    </EditText>
+</LinearLayout>
