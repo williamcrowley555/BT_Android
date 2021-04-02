@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
-    android:layout_width="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:paddingRight="20dp"
-
-    >
+    xmlns:tool="http://schemas.android.com/tools"
+    tool:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -17,109 +12,97 @@
         android:padding="15dp"
         android:text="@string/Convert"
         android:textColor="@color/purple_700"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/radio_CtoF"
-        app:layout_constraintStart_toStartOf="@+id/radio_CtoF" />
+        android:textSize="30sp" />
 
-
-    <RadioButton
-        android:id="@+id/radio_CtoF"
-        android:layout_width="0dp"
+    <RadioGroup
+        android:layout_below="@id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:checked="true"
-        android:text="@string/CtoF"
-        android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/radio_FtoC"
-        app:layout_constraintEnd_toStartOf="@+id/radio_FtoC"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup"
+        >
 
-    <RadioButton
-        android:id="@+id/radio_FtoC"
-        android:layout_width="0dp"
+        <RadioButton
+            android:id="@+id/radio_CtoF"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/CtoF"
+            android:textSize="18sp"
+
+            />
+
+        <RadioButton
+            android:id="@+id/radio_FtoC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/FtoC"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+
+    <LinearLayout
+        android:id="@+id/input_output_form"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:layout_marginBottom="13dp"
-        android:text="@string/FtoC"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/output"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radio_CtoF"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        android:layout_below="@id/radioGroup"
+        >
 
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="numberDecimal|numberSigned"
+            android:maxLines="1">
 
-    <EditText
-        android:id="@+id/input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:inputType="numberDecimal|numberSigned"
-        android:maxLines="1"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/output"
-        app:layout_constraintStart_toStartOf="parent">
+        </EditText>
 
-    </EditText>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="="
+            android:textSize="30sp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="197dp"
-        android:layout_marginLeft="197dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:padding="10dp"
-        android:text="="
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/output"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radio_FtoC">
+        </TextView>
 
-    </TextView>
+        <EditText
+            android:id="@+id/output"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:inputType="numberDecimal|numberSigned"
+            android:maxLines="1">
 
-    <EditText
-        android:id="@+id/output"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="22dp"
-        android:focusable="false"
-        android:inputType="numberDecimal|numberSigned"
-        android:maxLines="1"
-        app:layout_constraintBottom_toTopOf="@+id/convert_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/radio_FtoC">
+        </EditText>
 
-    </EditText>
+    </LinearLayout>
 
 
     <Button
         android:id="@+id/convert_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
         android:text="@string/Button"
-        app:layout_constraintBottom_toTopOf="@+id/history"
-        app:layout_constraintEnd_toEndOf="@+id/history"
-        app:layout_constraintStart_toStartOf="@+id/history"
-        app:layout_constraintTop_toBottomOf="@+id/output">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/input_output_form"
+        >
 
     </Button>
 
     <EditText
         android:id="@+id/history"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="315dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="false"
-
         android:gravity="top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/input"
-        app:layout_constraintTop_toBottomOf="@+id/convert_button" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_below="@id/convert_button"
+        />
+</RelativeLayout>

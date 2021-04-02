@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <!-- Here you put the rest of your current view-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menu"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingVertical="20dp"
+            >
+
+        </TextView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="1dp"
+            tools:context=".MainActivity"
+            android:background="@drawable/border_set"
+            android:id="@+id/taco"
+            >
+
+
+            <ImageView
+                android:id="@+id/imgTaco"
+                android:layout_width="180dp"
+                android:layout_height="120dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/taco_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imgTaco"
+                android:paddingLeft="16dp"
+                android:paddingBottom="8dp"
+                android:text="Taco Pronto"
+                android:textAllCaps="true"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/taco_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/taco_name"
+                android:layout_toRightOf="@id/imgTaco"
+                android:paddingLeft="16dp"
+                android:text="$5.00"
+                android:textAppearance="?android:textAppearanceLarge" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="1dp"
+            tools:context=".MainActivity"
+            android:background="@drawable/border_set"
+            >
+
+
+            <ImageView
+                android:id="@+id/imgPizza"
+                android:layout_width="180dp"
+                android:layout_height="120dp"
+                android:src="@drawable/pizza" />
+
+            <TextView
+                android:id="@+id/pizza_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imgPizza"
+                android:paddingLeft="16dp"
+                android:paddingBottom="8dp"
+                android:text="Pizza Caronila"
+                android:textAllCaps="true"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pizza_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pizza_name"
+                android:layout_toRightOf="@id/imgPizza"
+                android:paddingLeft="16dp"
+                android:text="$8.00"
+                android:textAppearance="?android:textAppearanceLarge" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="1dp"
+            tools:context=".MainActivity"
+            android:background="@drawable/border_set"
+            >
+
+
+            <ImageView
+                android:id="@+id/imgBurito"
+                android:layout_width="180dp"
+                android:layout_height="120dp"
+                android:src="@drawable/burito" />
+
+            <TextView
+                android:id="@+id/burito_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imgBurito"
+                android:paddingLeft="16dp"
+                android:paddingBottom="8dp"
+                android:text="Burito"
+                android:textAllCaps="true"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/burito_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/burito_name"
+                android:layout_toRightOf="@id/imgBurito"
+                android:paddingLeft="16dp"
+                android:text="$6.00"
+                android:textAppearance="?android:textAppearanceLarge" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="1dp"
+            tools:context=".MainActivity"
+            android:background="@drawable/border_set"
+            >
+
+
+            <ImageView
+                android:id="@+id/imgSandwich"
+                android:layout_width="180dp"
+                android:layout_height="120dp"
+                android:src="@drawable/sandwich" />
+
+            <TextView
+                android:id="@+id/sandwich_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imgSandwich"
+                android:paddingLeft="16dp"
+                android:paddingBottom="8dp"
+                android:text="Sandwich"
+                android:textAllCaps="true"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sandwich_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sandwich_name"
+                android:layout_toRightOf="@id/imgSandwich"
+                android:paddingLeft="16dp"
+                android:text="$5.99"
+                android:textAppearance="?android:textAppearanceLarge" />
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>
