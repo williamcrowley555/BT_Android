@@ -20,6 +20,7 @@ public class OrderActivity extends AppCompatActivity {
     String number = "123456";
     String size = "Size: Large";
     String tortilla = "Tortilla: Corn";
+
     ArrayList<String> filling = null;
 
 
