@@ -20,13 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener clickItemListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-           openOrder();
+            Intent i = new Intent(MainActivity.this, OrderActivity.class);
+            startActivity(i);
+
         }
     };
-
-    public void openOrder()
-    {
-        Intent i = new Intent(this, OrderActivity.class);
-        startActivity(i);
-    }
 }
