@@ -40,10 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener clickConvertListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            Uri gmmIntentUri = Uri.parse("geo:10.76525062566938, 106.69666179550275?q=200+Nguyễn+Thái+Học");
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
-            startActivity(mapIntent);
+            String url = "https://goo.gl/maps/t9EBkzobZ48reNdbA";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
     }
     };
 
