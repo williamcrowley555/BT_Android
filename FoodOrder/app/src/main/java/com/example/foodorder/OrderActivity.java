@@ -160,6 +160,7 @@ public class OrderActivity extends AppCompatActivity {
             for (int i = 0; i < filling.size(); i++)
                 order += filling.get(i)+ "\n";
         }
+
     }
     public void openActivity()
     {
@@ -170,4 +171,6 @@ public class OrderActivity extends AppCompatActivity {
         startActivity(it);
 
     }
+
+
 }
