@@ -4,15 +4,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
     Button button;
@@ -21,6 +25,8 @@ public class OrderActivity extends AppCompatActivity {
     String size = "Size: Large";
     String tortilla = "Tortilla: Corn";
     ArrayList<String> filling = null;
+    String[] filling_taco = {"abc","def"};
+    List<CheckBox> checkBoxes = new ArrayList<>();
 
 
     @Override
@@ -32,6 +38,19 @@ public class OrderActivity extends AppCompatActivity {
         option();
         button.setOnClickListener(clickItemListener);
 
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.right_fillings);
+
+        for (int i = 0; i < filling_taco.length; i++) {
+            CheckBox test = new CheckBox(this);
+            test.setId(1000+i);
+
+            test.setText(filling_taco[i]);
+            test.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+            test.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            linearLayout.addView(test);
+            checkBoxes.add(test);
+        }
     }
 
     private final View.OnClickListener clickItemListener = new View.OnClickListener(){
@@ -163,11 +182,24 @@ public class OrderActivity extends AppCompatActivity {
     }
     public void openActivity()
     {
+        for (CheckBox checkBox : checkBoxes)
+        {
+            itemClicked(checkBox);
+        }
+
         createOrder();
         Uri uri = Uri.parse("smsto: "+ number);
         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
         it.putExtra("sms_body", order);
         startActivity(it);
 
+    }
+
+    public void itemClicked(View v) {
+        //code to check if this checkbox is checked!
+        CheckBox checkBox = (CheckBox) v;
+        if(checkBox.isChecked()){
+            System.out.println(checkBox.getText() + " is selected");
+        }
     }
 }

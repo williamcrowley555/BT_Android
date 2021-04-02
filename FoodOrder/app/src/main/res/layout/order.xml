@@ -199,6 +199,7 @@
             <!--Fillings Right-->
 
             <LinearLayout
+                android:id="@+id/right_fillings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
