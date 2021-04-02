@@ -18,7 +18,7 @@ public class OrderActivity extends AppCompatActivity {
     Button button;
     String order = "One Taco with:\n";
     String number = "123456";
-    String size = "Size: medium";
+    String size = "Size: Large";
     String tortilla = "Tortilla: Corn";
     ArrayList<String> filling = null;
 
