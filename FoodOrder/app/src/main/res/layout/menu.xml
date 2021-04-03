@@ -90,6 +90,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/pizza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
@@ -130,6 +131,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/burito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
@@ -169,6 +171,7 @@
                 android:textAppearance="?android:textAppearanceLarge" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/sandwich"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"

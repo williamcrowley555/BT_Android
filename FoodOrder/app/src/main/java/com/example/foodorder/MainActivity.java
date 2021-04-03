@@ -14,6 +14,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     RelativeLayout item;
+    RelativeLayout item2;
+    RelativeLayout item3;
+    RelativeLayout item4;
     ImageButton locate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +24,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.menu);
         locate = findViewById(R.id.locate);
         locate.setOnClickListener(clickLocateListener);
-        
+
         item = findViewById(R.id.taco);
         item.setOnClickListener(clickItemListener);
+        item2 = findViewById(R.id.pizza);
+        item2.setOnClickListener(clickItemListener);
+        item3 = findViewById(R.id.burito);
+        item3.setOnClickListener(clickItemListener);
+        item4 = findViewById(R.id.sandwich);
+        item4.setOnClickListener(clickItemListener);
 
     }
 
