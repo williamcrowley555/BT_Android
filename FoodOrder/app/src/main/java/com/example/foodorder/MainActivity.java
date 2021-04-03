@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         item = findViewById(R.id.taco);
         item.setOnClickListener(clickItemListener);
-        item2 = findViewById(R.id.pizza);
+        item2 = findViewById(R.id.hamburger);
         item2.setOnClickListener(clickItemListener);
         item3 = findViewById(R.id.burito);
         item3.setOnClickListener(clickItemListener);

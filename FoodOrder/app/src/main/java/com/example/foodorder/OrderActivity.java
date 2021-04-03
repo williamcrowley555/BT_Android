@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -25,7 +23,7 @@ import static java.lang.Math.abs;
 
 public class OrderActivity extends AppCompatActivity {
     Button button;
-    String order = "One Taco with:\n";
+    String order;
     String number = "123456";
     String size = "Size: Large";
     String tortilla = "Tortilla: Corn";
@@ -33,6 +31,8 @@ public class OrderActivity extends AppCompatActivity {
     String beverage = "Beverge : ";
 
     String[] filling_taco = {"Beef", "Chicken", "White Fish", "Cheese", "Rice", "Beans", "Guacamole"};
+    String[] filling_hamburger = {"Fish", "Cheese", "Beef", "Egg", "Shrimp", "Chicken","Bacon"};
+    String[] Beverage_hamburger = {"Soda", "Cocacola", "Pepsi", "7Up"};
     String[] Beverage_taco = {"Soda", "Cerveza", "Margarita", "Tequila"};
     List<CheckBox> checkBoxesFilling = new ArrayList<>();
     List<CheckBox> checkBoxesBeverage = new ArrayList<>();
@@ -49,6 +49,7 @@ public class OrderActivity extends AppCompatActivity {
         int buttonId = intent.getIntExtra("item_id", 0);
         switch (buttonId) {
             case R.id.taco: {
+                order = "One Taco with:\n";
                 checkBoxesFilling = new ArrayList<>();
                 checkBoxesBeverage = new ArrayList<>();
                 ImageView img = findViewById(R.id.imgFood);
@@ -60,15 +61,19 @@ public class OrderActivity extends AppCompatActivity {
                 break;
             }
 
-            case R.id.pizza: {
+            case R.id.hamburger: {
+                order = "One Hamburger with:\n";
                 ImageView img = findViewById(R.id.imgFood);
-                img.setImageResource(R.drawable.pizza);
+                img.setImageResource(R.drawable.hamburger);
                 TextView name = findViewById(R.id.brand_name);
-                name.setText("Pizza Caronila");
+                name.setText("Hamburger");
+                fill(R.id.left_fillings, R.id.right_fillings, filling_hamburger, checkBoxesFilling);
+                fill(R.id.beverage_left, R.id.beverage_right, Beverage_hamburger, checkBoxesBeverage);
                 break;
             }
 
             case R.id.burito: {
+                order = "One Burito with:\n";
                 ImageView img = findViewById(R.id.imgFood);
                 img.setImageResource(R.drawable.burito);
                 TextView name = findViewById(R.id.brand_name);
@@ -77,6 +82,7 @@ public class OrderActivity extends AppCompatActivity {
             }
 
             case R.id.sandwich: {
+                order = "One Sanwich with:\n";
                 ImageView img = findViewById(R.id.imgFood);
                 img.setImageResource(R.drawable.sandwich);
                 TextView name = findViewById(R.id.brand_name);
@@ -164,7 +170,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     public void createOrder() {
-        order = "One Taco with:\n";
+
         order += size + "\n";
         order += tortilla + "\n";
         order += filled + "\n";

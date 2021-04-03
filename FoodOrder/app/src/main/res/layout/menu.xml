@@ -90,7 +90,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/pizza"
+            android:id="@+id/hamburger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
@@ -102,29 +102,29 @@
 
 
             <ImageView
-                android:id="@+id/imgPizza"
+                android:id="@+id/imgHamburger"
                 android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:src="@drawable/pizza" />
+                android:src="@drawable/hamburger" />
 
             <TextView
-                android:id="@+id/pizza_name"
+                android:id="@+id/hamburger_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/imgPizza"
+                android:layout_toRightOf="@id/imgHamburger"
                 android:paddingLeft="16dp"
                 android:paddingBottom="8dp"
-                android:text="Pizza Caronila"
+                android:text="Hamburger"
                 android:textAllCaps="true"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/pizza_price"
+                android:id="@+id/hamburger_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/pizza_name"
-                android:layout_toRightOf="@id/imgPizza"
+                android:layout_below="@id/hamburger_name"
+                android:layout_toRightOf="@id/imgHamburger"
                 android:paddingLeft="16dp"
                 android:text="$8.00"
                 android:textAppearance="?android:textAppearanceLarge" />
