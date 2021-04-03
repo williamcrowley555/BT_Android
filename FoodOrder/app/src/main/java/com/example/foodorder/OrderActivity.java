@@ -24,24 +24,28 @@ public class OrderActivity extends AppCompatActivity {
     String number = "123456";
     String size = "Size: Large";
     String tortilla = "Tortilla: Corn";
-
+    String filled = "Filling : ";
+    String beverage = "Beverge : ";
     ArrayList<String> filling = null;
-    String[] filling_taco = {"abc","def"};
-    List<CheckBox> checkBoxes = new ArrayList<>();
+    String[] filling_taco = {"Beef","Chicken","White Fish","Cheese","Rice","Beans","Guacamole"};
+    String[] Beverage_taco = {"Soda","Cerveza","Margarita","Tequila"};
+    List<CheckBox> checkBoxesFilling = new ArrayList<>();
+    List<CheckBox> checkBoxesBeverage = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order);
+        filled = "Filling : ";
         button = findViewById(R.id.orderButton);
         filling = new ArrayList<>();
         option();
         button.setOnClickListener(clickItemListener);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.right_fillings);
+        LinearLayout linearLayoutLeftFilling = (LinearLayout) findViewById(R.id.left_fillings);
 
-        for (int i = 0; i < filling_taco.length; i++) {
+        for (int i = 0; i <= filling_taco.length/2; i++) {
             CheckBox test = new CheckBox(this);
             test.setId(1000+i);
 
@@ -49,8 +53,50 @@ public class OrderActivity extends AppCompatActivity {
             test.setTextAppearance(this, android.R.style.TextAppearance_Medium);
             test.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            linearLayout.addView(test);
-            checkBoxes.add(test);
+            linearLayoutLeftFilling.addView(test);
+            checkBoxesFilling.add(test);
+        }
+
+        LinearLayout linearLayoutRightFilling = (LinearLayout) findViewById(R.id.right_fillings);
+
+        for (int i = filling_taco.length/2+1; i < filling_taco.length; i++) {
+            CheckBox test = new CheckBox(this);
+            test.setId(1000+i);
+
+            test.setText(filling_taco[i]);
+            test.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+            test.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            linearLayoutRightFilling.addView(test);
+            checkBoxesFilling.add(test);
+        }
+
+        LinearLayout linearLayoutLeftBeverage = (LinearLayout) findViewById(R.id.beverage_left);
+
+        for (int i = 0; i <= Beverage_taco.length/2; i++) {
+            CheckBox test = new CheckBox(this);
+            test.setId(2000+i);
+
+            test.setText(Beverage_taco[i]);
+            test.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+            test.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            linearLayoutLeftBeverage.addView(test);
+            checkBoxesBeverage.add(test);
+        }
+
+        LinearLayout linearLayoutRightBeverage = (LinearLayout) findViewById(R.id.beverage_right);
+
+        for (int i = Beverage_taco.length/2+1; i < Beverage_taco.length; i++) {
+            CheckBox test = new CheckBox(this);
+            test.setId(2000+i);
+
+            test.setText(Beverage_taco[i]);
+            test.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+            test.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            linearLayoutRightBeverage.addView(test);
+            checkBoxesBeverage.add(test);
         }
     }
 
@@ -96,75 +142,6 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
-        CheckBox filling_beef = (CheckBox)findViewById(R.id.fillings_beef);
-        filling_beef.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                   filling.add("Beef");
-                } else filling.remove("Beef");
-            }
-        });
-
-        CheckBox filling_rice = (CheckBox)findViewById(R.id.fillings_rice);
-        filling_rice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    filling.add("Rice");
-                } else filling.remove("Rice");
-            }
-        });
-
-        CheckBox filling_chicken = (CheckBox)findViewById(R.id.fillings_chicken);
-        filling_chicken.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    filling.add("Chicken");
-                } else filling.remove("Chicken");
-            }
-        });
-
-        CheckBox filling_beans = (CheckBox)findViewById(R.id.fillings_beans);
-        filling_beans.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    filling.add("Beans");
-                } else filling.remove("Beans");
-            }
-        });
-
-        CheckBox filling_whiteFish = (CheckBox)findViewById(R.id.fillings_white_fish);
-        filling_whiteFish.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    filling.add("White Fish");
-                } else filling.remove("White Fish");
-            }
-        });
-
-        CheckBox filling_guacamole = (CheckBox)findViewById(R.id.fillings_guacamole);
-        filling_guacamole.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    filling.add("Guacamole");
-                } else filling.remove("Guacamole");
-            }
-        });
-
-        CheckBox filling_cheese = (CheckBox)findViewById(R.id.fillings_cheese);
-        filling_cheese.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    filling.add("Cheese");
-                } else filling.remove("Guacamole");
-            }
-        });
 
     }
     public void createOrder()
@@ -172,21 +149,22 @@ public class OrderActivity extends AppCompatActivity {
         order = "One Taco with:\n";
         order += size + "\n";
         order += tortilla + "\n";
+        order += filled + "\n";
+        order += beverage + "\n";
 
-        if (filling.isEmpty()) order += "Filling: none";
-        else
-        {
-            order += "Filling: \n";
-            for (int i = 0; i < filling.size(); i++)
-                order += filling.get(i)+ "\n";
-        }
 
     }
     public void openActivity()
     {
-        for (CheckBox checkBox : checkBoxes)
+        System.out.println("clicked");
+        for (CheckBox checkBox : checkBoxesFilling)
         {
-            itemClicked(checkBox);
+           filled += itemClicked(checkBox);
+        }
+
+        for (CheckBox checkBox : checkBoxesBeverage)
+        {
+            beverage += itemClicked(checkBox);
         }
 
         createOrder();
@@ -194,14 +172,19 @@ public class OrderActivity extends AppCompatActivity {
         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
         it.putExtra("sms_body", order);
         startActivity(it);
+        filled = "Filling : ";
+        beverage = "Beverge : ";
+
 
     }
-    
-    public void itemClicked(View v) {
+
+    public String itemClicked(View v) {
+        String s = "";
         //code to check if this checkbox is checked!
         CheckBox checkBox = (CheckBox) v;
         if(checkBox.isChecked()){
-            System.out.println(checkBox.getText() + " is selected");
+            s+= checkBox.getText()+" ";
         }
+        return s;
     }
 }

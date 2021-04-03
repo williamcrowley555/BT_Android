@@ -160,40 +160,41 @@
             <!--Fillings Left-->
 
             <LinearLayout
+                android:id="@+id/left_fillings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <CheckBox
-                    android:id="@+id/fillings_beef"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="Beef"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/fillings_beef"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:text="Beef"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
 
-                <CheckBox
-                    android:id="@+id/fillings_chicken"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="Chicken"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/fillings_chicken"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:text="Chicken"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
 
-                <CheckBox
-                    android:id="@+id/fillings_white_fish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="White Fish"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/fillings_white_fish"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:text="White Fish"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
 
-                <CheckBox
-                    android:id="@+id/fillings_cheese"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="Cheese"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/fillings_cheese"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:text="Cheese"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
             </LinearLayout>
 
             <!--Fillings Right-->
@@ -205,26 +206,26 @@
                 android:orientation="vertical"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="50dp">
-                <CheckBox
-                    android:id="@+id/fillings_rice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rice"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/fillings_rice"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Rice"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
 
-                <CheckBox
-                    android:id="@+id/fillings_beans"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Beans"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/fillings_beans"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Beans"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
 
-                <CheckBox
-                    android:id="@+id/fillings_guacamole"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Guacamole"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/fillings_guacamole"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Guacamole"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
             </LinearLayout>
         </LinearLayout>
 
@@ -248,50 +249,52 @@
             <!--    Beverage Left-->
 
             <LinearLayout
+                android:id="@+id/beverage_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <CheckBox
-                    android:id="@+id/beverage_soda"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="Soda"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/beverage_soda"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:text="Soda"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
 
-                <CheckBox
-                    android:id="@+id/beverage_cerveza"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="Cerveza"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/beverage_cerveza"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:text="Cerveza"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
             </LinearLayout>
 
             <!--Beverage Right-->
 
             <LinearLayout
+                android:id="@+id/beverage_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="65dp">
 
-                <CheckBox
-                    android:id="@+id/beverage_margarita"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Margarita"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/beverage_margarita"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Margarita"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
 
-                <CheckBox
-                    android:id="@+id/beverage_tequila"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tequila"
-                    android:textAppearance="?android:textAppearanceMedium" />
+<!--                <CheckBox-->
+<!--                    android:id="@+id/beverage_tequila"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Tequila"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium" />-->
             </LinearLayout>
         </LinearLayout>
 
@@ -300,7 +303,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@id/beverage_tequila"
+
             android:paddingVertical="8dp"
             android:text="Place Your Order" />
 

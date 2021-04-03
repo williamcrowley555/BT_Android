@@ -12,18 +12,42 @@
         android:orientation="vertical"
 
         >
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Menu"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:paddingVertical="20dp"
+            android:orientation="horizontal"
+
             >
 
-        </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="20dp"
+                android:paddingVertical="20dp"
+                android:text="Menu"
+                android:textAllCaps="true"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+
+            <ImageButton
+                android:id="@+id/locate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@android:color/transparent"
+                android:src="@drawable/locate">
+
+            </ImageButton>
+        </LinearLayout>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +58,6 @@
             android:background="@drawable/border_set"
             android:id="@+id/taco"
             >
-
 
             <ImageView
                 android:id="@+id/imgTaco"
@@ -63,6 +86,7 @@
                 android:paddingLeft="16dp"
                 android:text="$5.00"
                 android:textAppearance="?android:textAppearanceLarge" />
+
         </RelativeLayout>
 
         <RelativeLayout
