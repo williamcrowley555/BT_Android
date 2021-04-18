@@ -62,7 +62,11 @@ public class ReadCountryJSON extends AsyncTask<String, Void, String> {
                 JSONObject object = geonamesArray.getJSONObject(i);
                 Integer id = i;
                 String countryName = object.getString("countryName");
-                countryList.add(new Country(id, countryName));
+                String countryCode = object.getString("countryCode");
+                Long population = object.getLong("population");
+                Double area = object.getDouble("areaInSqKm");
+
+                countryList.add(new Country(id, countryName, countryCode, population, area));
             }
 
             adapter.notifyDataSetChanged();

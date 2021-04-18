@@ -17,6 +17,8 @@
         </activity>
 
         <activity android:name=".activity.CountryActivity"></activity>
+        <activity android:name=".activity.CountryInfoActivity"></activity>
+        <activity android:name=".activity.CurrencyActivity"></activity>
     </application>
 
 </manifest>

@@ -139,12 +139,12 @@ public class CurrencyActivity extends AppCompatActivity {
                     JSONArray jsonarray = new JSONArray(responseText);
                     for (int i = 0; i < jsonarray.length(); i++) {
                         JSONObject jsonobject = jsonarray.getJSONObject(i);
-                        int id = jsonobject.getInt("id");
-                        String country = jsonobject.getString("countryName");
-                        Log.d(TAG, "id:" + id);
-                        Log.d(TAG, "country:" + country);
-                        Country countryObj=new Country(id,country);
-                        countries.add(countryObj);
+//                        int id = jsonobject.getInt("id");
+//                        String country = jsonobject.getString("countryName");
+//                        Log.d(TAG, "id:" + id);
+//                        Log.d(TAG, "country:" + country);
+//                        Country countryObj=new Country(id,country);
+//                        countries.add(countryObj);
                     }
 
                 } catch (JSONException e) {

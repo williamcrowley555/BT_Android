@@ -1,5 +1,6 @@
 package com.java2blog.androidrestjsonexample.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -38,7 +39,9 @@ public class CountryActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(CountryActivity.this, countryList.get(position).getCountryName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CountryActivity.this, CountryInfoActivity.class);
+                intent.putExtra("country", countryList.get(position));
+                startActivity(intent);
             }
         });
     }
