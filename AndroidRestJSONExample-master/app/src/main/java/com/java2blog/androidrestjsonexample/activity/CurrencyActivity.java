@@ -8,10 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.java2blog.androidrestjsonexample.adapter.CountryAdapter;
+import com.java2blog.androidrestjsonexample.asyncTask.ReadCountryJSON;
+import com.java2blog.androidrestjsonexample.asyncTask.ReadCurrencyConverterRSS;
 import com.java2blog.androidrestjsonexample.model.Country;
 import com.java2blog.androidrestjsonexample.CustomCountryList;
 import com.java2blog.androidrestjsonexample.R;
@@ -25,6 +32,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -32,124 +41,68 @@ import static android.content.ContentValues.TAG;
 
 public class CurrencyActivity extends AppCompatActivity {
 
+    private Spinner spinnerFromCurrency, spinnerToCurrency;
+    private EditText etAmount;
+    private TextView tvResult;
     private Button btnSubmit;
-    String responseText;
-    StringBuffer response;
-    URL url;
-    Activity activity;
-    ArrayList<Country> countries=new ArrayList<Country>();
-    private ProgressDialog progressDialog;
-    ListView listView;
-
-      // In case if you deploy rest web service, then use below link and replace below ip address with yours
-    //http://192.168.2.22:8080/JAXRSJsonExample/rest/countries
-    
-    //Direct Web services URL
-    private String path = "https://cdn.rawgit.com/arpitmandliya/AndroidRestJSONExample/master/countries.json";
+    List<Country> countryList = new ArrayList<>();
+    CountryAdapter countryAdapter;
+    ArrayAdapter adapter;
+    String JSONPath = "http://api.geonames.org/countryInfoJSON?username=aporter";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_currency);
-            activity = this;
-//            btnSubmit = (Button) findViewById(R.id.btnSubmit);
-            listView = (ListView) findViewById(android.R.id.list);
-            btnSubmit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    countries.clear();
-                    //Call WebService
-                    new GetServerData().execute();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_currency_converter);
+
+        mapView();
+
+        countryAdapter = new CountryAdapter(this, R.layout.row_country, countryList);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, new ArrayList());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerFromCurrency.setAdapter(adapter);
+        spinnerToCurrency.setAdapter(adapter);
+
+        new ReadCountryJSON(countryAdapter, adapter, countryList).execute(JSONPath);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (spinnerFromCurrency.getSelectedItem().equals(spinnerToCurrency.getSelectedItem())) {
+                    Toast.makeText(CurrencyActivity.this, "Please select the country you want to convert", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            });
-        }
 
-        class GetServerData extends AsyncTask
-        {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                // Showing progress dialog
-                progressDialog = new ProgressDialog(CurrencyActivity.this);
-                progressDialog.setMessage("Fetching conntry data");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-
-            }
-
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                return getWebServiceResponseData();
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-
-                // Dismiss the progress dialog
-                if (progressDialog.isShowing())
-                    progressDialog.dismiss();
-                // For populating list data
-                CustomCountryList customCountryList = new CustomCountryList(activity, countries);
-                listView.setAdapter(customCountryList);
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Toast.makeText(getApplicationContext(),"You Selected "+countries.get(position).getCountryName()+ " as Country",Toast.LENGTH_SHORT).show();        }
-                });
-            }
-        }
-        protected Void getWebServiceResponseData() {
-
-            try {
-
-                url = new URL(path);
-                Log.d(TAG, "ServerData: " + path);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(15000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("GET");
-
-                int responseCode = conn.getResponseCode();
-
-                Log.d(TAG, "Response code: " + responseCode);
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-                    // Reading response from input Stream
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(conn.getInputStream()));
-                    String output;
-                    response = new StringBuffer();
-
-                    while ((output = in.readLine()) != null) {
-                        response.append(output);
-                    }
-                    in.close();
-                }}
-             catch(Exception e){
-                    e.printStackTrace();
-            }
-
-                responseText = response.toString();
-                //Call ServerData() method to call webservice and store result in response
-              //  response = service.ServerData(path, postDataParams);
-                Log.d(TAG, "data:" + responseText);
-                try {
-                    JSONArray jsonarray = new JSONArray(responseText);
-                    for (int i = 0; i < jsonarray.length(); i++) {
-                        JSONObject jsonobject = jsonarray.getJSONObject(i);
-//                        int id = jsonobject.getInt("id");
-//                        String country = jsonobject.getString("countryName");
-//                        Log.d(TAG, "id:" + id);
-//                        Log.d(TAG, "country:" + country);
-//                        Country countryObj=new Country(id,country);
-//                        countries.add(countryObj);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                String amountText = etAmount.getText().toString().trim();
+                if(amountText.length() == 0)
+                {
+                    Toast.makeText(CurrencyActivity.this, "Please enter amount", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                return null;
+
+                Double amount = Double.valueOf(amountText);
+
+                Integer spinnerFromPosition = spinnerFromCurrency.getSelectedItemPosition();
+                Integer spinnerToPosition = spinnerToCurrency.getSelectedItemPosition();
+
+                String countryCurrencyFrom = countryList.get(spinnerFromPosition).getCurrencyCode();
+                String countryCurrencyTo = countryList.get(spinnerToPosition).getCurrencyCode();
+
+                new ReadCurrencyConverterRSS(tvResult, amount).execute(getRSSPath(countryCurrencyFrom, countryCurrencyTo));
             }
+        });
     }
+
+    private String getRSSPath(String countryCurrencyFrom, String countryCurrencyTo) {
+        return "https://" + countryCurrencyFrom.toLowerCase() + ".fxexchangerate.com/"+ countryCurrencyTo.toLowerCase() + ".xml";
+    }
+
+    private void mapView() {
+        spinnerFromCurrency = (Spinner) findViewById(R.id.spinnerFromCurrency);
+        spinnerToCurrency = (Spinner) findViewById(R.id.spinnerToCurrency);
+        etAmount = (EditText) findViewById(R.id.etAmount);
+        tvResult = (TextView) findViewById(R.id.tvResult);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+    }
+}

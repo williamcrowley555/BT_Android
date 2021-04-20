@@ -6,16 +6,18 @@ public class Country implements Serializable {
     private Integer id;
     private String countryName;
     private String countryCode;
+    private String currencyCode;
     private Long population;
     private Double area;
 
     public Country() {
     }
 
-    public Country(Integer id, String countryName, String countryCode, Long population, Double area) {
+    public Country(Integer id, String countryName, String countryCode, String currencyCode, Long population, Double area) {
         this.id = id;
         this.countryName = countryName;
         this.countryCode = countryCode;
+        this.currencyCode = currencyCode;
         this.population = population;
         this.area = area;
     }
@@ -39,6 +41,14 @@ public class Country implements Serializable {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public Long getPopulation() {

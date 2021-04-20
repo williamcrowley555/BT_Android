@@ -1,6 +1,7 @@
 package com.java2blog.androidrestjsonexample.asyncTask;
 
 import android.os.AsyncTask;
+import android.widget.ArrayAdapter;
 
 import com.java2blog.androidrestjsonexample.model.Country;
 import com.java2blog.androidrestjsonexample.adapter.CountryAdapter;
@@ -14,12 +15,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReadCountryJSON extends AsyncTask<String, Void, String> {
 
     private List<Country> countryList;
+    private ArrayAdapter arrayAdapter;
     private CountryAdapter adapter;
+
+
+    public ReadCountryJSON(CountryAdapter adapter, ArrayAdapter arrayAdapter, List<Country> countryList) {
+        this.adapter = adapter;
+        this.arrayAdapter = arrayAdapter;
+        this.countryList = countryList;
+    }
 
     public ReadCountryJSON(CountryAdapter adapter, List<Country> countryList) {
         this.adapter = adapter;
@@ -63,13 +73,25 @@ public class ReadCountryJSON extends AsyncTask<String, Void, String> {
                 Integer id = i;
                 String countryName = object.getString("countryName");
                 String countryCode = object.getString("countryCode");
+                String currencyCode = object.getString("currencyCode");
                 Long population = object.getLong("population");
                 Double area = object.getDouble("areaInSqKm");
 
-                countryList.add(new Country(id, countryName, countryCode, population, area));
+                countryList.add(new Country(id, countryName, countryCode, currencyCode, population, area));
             }
 
-            adapter.notifyDataSetChanged();
+            if (arrayAdapter != null) {
+                List<String> countries = new ArrayList<>();
+
+                for (Country country : countryList) {
+                    countries.add(country.getCountryName());
+                }
+
+                arrayAdapter.addAll(countries);
+                arrayAdapter.notifyDataSetChanged();
+            } else if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
