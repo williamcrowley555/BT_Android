@@ -7,7 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 public class Graphic extends Activity {
-    MediaPlayer mp = new MediaPlayer();
+    MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
