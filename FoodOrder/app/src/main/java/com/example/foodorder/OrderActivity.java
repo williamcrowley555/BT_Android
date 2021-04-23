@@ -32,8 +32,12 @@ public class OrderActivity extends AppCompatActivity {
 
     String[] filling_taco = {"Beef", "Chicken", "White Fish", "Cheese", "Rice", "Beans", "Guacamole"};
     String[] filling_hamburger = {"Fish", "Cheese", "Beef", "Egg", "Shrimp", "Chicken","Bacon"};
+    String[] filling_burito = {"Fish", "Cheese", "Beef", "Shrimp", "Chicken", "Pork"};
+    String[] filling_sandwich = {"Cheese", "Beef", "Chicken", "Pork", "Jam"};
     String[] Beverage_hamburger = {"Soda", "Cocacola", "Pepsi", "7Up"};
     String[] Beverage_taco = {"Soda", "Cerveza", "Margarita", "Tequila"};
+    String[] Beverage_burito = {"Soda", "CocaCola", "Fanta", "Twitster"};
+    String[] Beverage_sandwich = {"Soda", "Cerveza", "MilkTea", "Yomost"};
     List<CheckBox> checkBoxesFilling = new ArrayList<>();
     List<CheckBox> checkBoxesBeverage = new ArrayList<>();
 
@@ -78,6 +82,8 @@ public class OrderActivity extends AppCompatActivity {
                 img.setImageResource(R.drawable.burito);
                 TextView name = findViewById(R.id.brand_name);
                 name.setText("Burito");
+                fill(R.id.left_fillings, R.id.right_fillings, filling_burito, checkBoxesFilling);
+                fill(R.id.beverage_left, R.id.beverage_right, Beverage_burito, checkBoxesBeverage);
                 break;
             }
 
@@ -87,6 +93,8 @@ public class OrderActivity extends AppCompatActivity {
                 img.setImageResource(R.drawable.sandwich);
                 TextView name = findViewById(R.id.brand_name);
                 name.setText("Sandwich");
+                fill(R.id.left_fillings, R.id.right_fillings, filling_sandwich, checkBoxesFilling);
+                fill(R.id.beverage_left, R.id.beverage_right, Beverage_sandwich, checkBoxesBeverage);
                 break;
             }
         }
