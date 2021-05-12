@@ -40,7 +40,6 @@ public class PlayerActivity extends AppCompatActivity {
     BarVisualizer visualizer;
 
     String sName;
-    public static final String EXTRA_NAME = "song_name";
     static MediaPlayer mediaPlayer;
     int position;
     ArrayList<File> mySongs;
@@ -68,7 +67,7 @@ public class PlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player);
 
 //        Bind MusicService
-        Intent i = new Intent(this, MusicService.class);
+        Intent i = new Intent(PlayerActivity.this, MusicService.class);
         bindService(i, serviceConnection, BIND_AUTO_CREATE);
 
         getSupportActionBar().setTitle("Now Playing");
@@ -76,178 +75,6 @@ public class PlayerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mapView();
-
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-
-        mySongs = (ArrayList) bundle.getParcelableArrayList("songs");
-        String songName = intent.getStringExtra("songName");
-        position = bundle.getInt("position", 0);
-
-        txtSongName.setSelected(true);
-        Uri uri = Uri.parse(mySongs.get(position).toString());
-        sName = mySongs.get(position).getName();
-        txtSongName.setText(sName);
-
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-        mediaPlayer.start();
-
-//        Update current position of media player every 0.5s
-        updateSeekbar = new Thread() {
-            @Override
-            public void run() {
-                int totalDuration = mediaPlayer.getDuration();
-                int currentPosition = 0;
-
-                while (currentPosition < totalDuration) {
-                    try {
-                        sleep(500);
-                        currentPosition = mediaPlayer.getCurrentPosition();
-                        seekMusic.setProgress(currentPosition);
-                    } catch (InterruptedException | IllegalStateException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        };
-
-//        Change seekbar's background color
-        seekMusic.setMax(mediaPlayer.getDuration());
-        updateSeekbar.start();
-        seekMusic.getProgressDrawable().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.MULTIPLY);
-        seekMusic.getThumb().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_IN);
-
-//        Seek to the postion that user selected
-        seekMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                mediaPlayer.seekTo(seekBar.getProgress());
-            }
-        });
-
-        updateSongEndTime(txtSongStop, mediaPlayer);
-
-//        Update song's current time on every second
-        final Handler handler = new Handler();
-        final int delay = 1000;
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                String currentTime = createTime(mediaPlayer.getCurrentPosition());
-                txtSongStart.setText(currentTime);
-                handler.postDelayed(this, delay);
-            }
-        }, delay);
-
-//        Visualizer
-        int audioSessionId = mediaPlayer.getAudioSessionId();
-        if (audioSessionId != -1) {
-            visualizer.setAudioSessionId(audioSessionId);
-        }
-
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    btnPlay.setBackgroundResource(R.drawable.ic_play);
-                    mediaPlayer.pause();
-                }
-                else {
-                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
-                    mediaPlayer.start();
-                }
-            }
-        });
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                position = (position + 1) % mySongs.size();
-
-                Uri u = Uri.parse(mySongs.get(position).toString());
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), u);
-                sName = mySongs.get(position).getName();
-                txtSongName.setText(sName);
-                mediaPlayer.start();
-                btnPlay.setBackgroundResource(R.drawable.ic_pause);
-                seekMusic.setMax(mediaPlayer.getDuration());
-                updateSongEndTime(txtSongStop, mediaPlayer);
-                startAnimation(ivMusicLogo);
-
-                int audioSessionId = mediaPlayer.getAudioSessionId();
-                if (audioSessionId != -1) {
-                    visualizer.setAudioSessionId(audioSessionId);
-                }
-            }
-        });
-
-        btnPrev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                position = (position -  1) < 0  ? mySongs.size() - 1 : position - 1;
-
-                Uri u = Uri.parse(mySongs.get(position).toString());
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), u);
-                sName = mySongs.get(position).getName();
-                txtSongName.setText(sName);
-                mediaPlayer.start();
-                btnPlay.setBackgroundResource(R.drawable.ic_pause);
-                seekMusic.setMax(mediaPlayer.getDuration());
-                updateSongEndTime(txtSongStop, mediaPlayer);
-                startAnimation(ivMusicLogo);
-
-                int audioSessionId = mediaPlayer.getAudioSessionId();
-                if (audioSessionId != -1) {
-                    visualizer.setAudioSessionId(audioSessionId);
-                }
-            }
-        });
-
-        btnff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 10000);
-                }
-            }
-        });
-
-        btnfr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 10000);
-                }
-            }
-        });
-
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                btnNext.performClick();
-            }
-        });
     }
 
     ServiceConnection serviceConnection = new ServiceConnection() {
@@ -255,11 +82,182 @@ public class PlayerActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName name, IBinder service) {
             MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
             musicService = binder.getService();
+
+            if (musicService.getMediaPlayer() != null) {
+                musicService.stopMediaPlayer();
+            }
+
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+
+            mySongs = (ArrayList) bundle.getParcelableArrayList("songs");
+            position = bundle.getInt("position", 0);
+
+            txtSongName.setSelected(true);
+            Uri uri = Uri.parse(mySongs.get(position).toString());
+            sName = mySongs.get(position).getName();
+            txtSongName.setText(sName);
+
+            musicService.startMediaPlayer(uri);
+
+            mediaPlayer = musicService.getMediaPlayer();
+
+//        Update current position of media player every 0.5s
+            updateSeekbar = new Thread() {
+                @Override
+                public void run() {
+                    int totalDuration = mediaPlayer.getDuration();
+                    int currentPosition = 0;
+
+                    while (currentPosition < totalDuration) {
+                        try {
+                            sleep(500);
+                            currentPosition = mediaPlayer.getCurrentPosition();
+                            seekMusic.setProgress(currentPosition);
+                        } catch (InterruptedException | IllegalStateException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            };
+
+//        Change seekbar's background color
+            seekMusic.setMax(mediaPlayer.getDuration());
+            updateSeekbar.start();
+            seekMusic.getProgressDrawable().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.MULTIPLY);
+            seekMusic.getThumb().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_IN);
+
+//        Seek to the postion that user selected
+            seekMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    mediaPlayer.seekTo(seekBar.getProgress());
+                }
+            });
+
+            updateSongEndTime(txtSongStop, mediaPlayer);
+
+//        Update song's current time on every second
+            final Handler handler = new Handler();
+            final int delay = 1000;
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String currentTime = createTime(mediaPlayer.getCurrentPosition());
+                    txtSongStart.setText(currentTime);
+                    handler.postDelayed(this, delay);
+                }
+            }, delay);
+
+//        Visualizer
+            int audioSessionId = mediaPlayer.getAudioSessionId();
+            if (audioSessionId != -1) {
+                visualizer.setAudioSessionId(audioSessionId);
+            }
+
+            btnPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mediaPlayer.isPlaying()) {
+                        btnPlay.setBackgroundResource(R.drawable.ic_play);
+                        mediaPlayer.pause();
+                    }
+                    else {
+                        btnPlay.setBackgroundResource(R.drawable.ic_pause);
+                        mediaPlayer.start();
+                    }
+                }
+            });
+
+            btnNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    musicService.stopMediaPlayer();
+                    position = (position + 1) % mySongs.size();
+
+                    Uri u = Uri.parse(mySongs.get(position).toString());
+                    musicService.startMediaPlayer(u);
+                    mediaPlayer = musicService.getMediaPlayer();
+                    sName = mySongs.get(position).getName();
+                    txtSongName.setText(sName);
+                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
+                    seekMusic.setMax(mediaPlayer.getDuration());
+                    updateSongEndTime(txtSongStop, mediaPlayer);
+                    startAnimation(ivMusicLogo);
+
+                    int audioSessionId = mediaPlayer.getAudioSessionId();
+                    if (audioSessionId != -1) {
+                        visualizer.setAudioSessionId(audioSessionId);
+                    }
+                }
+            });
+
+            btnPrev.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    musicService.stopMediaPlayer();
+                    position = (position -  1) < 0  ? mySongs.size() - 1 : position - 1;
+
+                    Uri u = Uri.parse(mySongs.get(position).toString());
+                    musicService.startMediaPlayer(u);
+                    mediaPlayer = musicService.getMediaPlayer();
+                    sName = mySongs.get(position).getName();
+                    txtSongName.setText(sName);
+                    btnPlay.setBackgroundResource(R.drawable.ic_pause);
+                    seekMusic.setMax(mediaPlayer.getDuration());
+                    updateSongEndTime(txtSongStop, mediaPlayer);
+                    startAnimation(ivMusicLogo);
+
+                    int audioSessionId = mediaPlayer.getAudioSessionId();
+                    if (audioSessionId != -1) {
+                        visualizer.setAudioSessionId(audioSessionId);
+                    }
+                }
+            });
+
+            btnff.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 10000);
+                    }
+                }
+            });
+
+            btnfr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 10000);
+                    }
+                }
+            });
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    btnNext.performClick();
+                }
+            });
+
             mIsBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            musicService.stopMediaPlayer();
             musicService = null;
             mIsBound = false;
         }

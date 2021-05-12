@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 public class MusicService extends Service {
     private IBinder iBinder = new MusicBinder();
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
 
     @Override
     public void onCreate() {
@@ -21,8 +21,12 @@ public class MusicService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        System.out.println("========================== ONBIND ========================");
         return iBinder;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     public class MusicBinder extends Binder {
@@ -31,24 +35,17 @@ public class MusicService extends Service {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    public void startMediaPlayer(MediaPlayer mediaPlayer, Uri uri) {
-        this.mediaPlayer = mediaPlayer;
+    public void startMediaPlayer(Uri uri) {
         this.mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
         this.mediaPlayer.start();
     }
 
-    public void stopMediaPlayer(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
+    public void stopMediaPlayer() {
         this.mediaPlayer.stop();
         this.mediaPlayer.release();
     }
 
-    public String hello() {
-        return "HELLO BINDER";
+    public MediaPlayer getMediaPlayer() {
+        return this.mediaPlayer;
     }
 }
