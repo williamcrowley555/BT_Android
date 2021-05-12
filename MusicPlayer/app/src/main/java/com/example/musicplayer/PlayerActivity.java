@@ -1,16 +1,28 @@
 package com.example.musicplayer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
+import android.media.audiofx.Visualizer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.musicplayer.service.MusicService;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 
 import java.io.File;
@@ -18,8 +30,12 @@ import java.util.ArrayList;
 
 public class PlayerActivity extends AppCompatActivity {
 
+    private boolean mIsBound;
+    private MusicService musicService;
+
     Button btnPlay, btnNext, btnPrev, btnff, btnfr;
     TextView txtSongName, txtSongStart, txtSongStop;
+    ImageView ivMusicLogo;
     SeekBar seekMusic;
     BarVisualizer visualizer;
 
@@ -28,11 +44,36 @@ public class PlayerActivity extends AppCompatActivity {
     static MediaPlayer mediaPlayer;
     int position;
     ArrayList<File> mySongs;
+    Thread updateSeekbar;
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (visualizer != null) {
+            visualizer.release();
+        }
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+
+//        Bind MusicService
+        Intent i = new Intent(this, MusicService.class);
+        bindService(i, serviceConnection, BIND_AUTO_CREATE);
+
+        getSupportActionBar().setTitle("Now Playing");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mapView();
 
@@ -56,6 +97,71 @@ public class PlayerActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
         mediaPlayer.start();
 
+//        Update current position of media player every 0.5s
+        updateSeekbar = new Thread() {
+            @Override
+            public void run() {
+                int totalDuration = mediaPlayer.getDuration();
+                int currentPosition = 0;
+
+                while (currentPosition < totalDuration) {
+                    try {
+                        sleep(500);
+                        currentPosition = mediaPlayer.getCurrentPosition();
+                        seekMusic.setProgress(currentPosition);
+                    } catch (InterruptedException | IllegalStateException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        };
+
+//        Change seekbar's background color
+        seekMusic.setMax(mediaPlayer.getDuration());
+        updateSeekbar.start();
+        seekMusic.getProgressDrawable().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.MULTIPLY);
+        seekMusic.getThumb().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_IN);
+
+//        Seek to the postion that user selected
+        seekMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(seekBar.getProgress());
+            }
+        });
+
+        updateSongEndTime(txtSongStop, mediaPlayer);
+
+//        Update song's current time on every second
+        final Handler handler = new Handler();
+        final int delay = 1000;
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                String currentTime = createTime(mediaPlayer.getCurrentPosition());
+                txtSongStart.setText(currentTime);
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+
+//        Visualizer
+        int audioSessionId = mediaPlayer.getAudioSessionId();
+        if (audioSessionId != -1) {
+            visualizer.setAudioSessionId(audioSessionId);
+        }
+
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +175,124 @@ public class PlayerActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                position = (position + 1) % mySongs.size();
+
+                Uri u = Uri.parse(mySongs.get(position).toString());
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), u);
+                sName = mySongs.get(position).getName();
+                txtSongName.setText(sName);
+                mediaPlayer.start();
+                btnPlay.setBackgroundResource(R.drawable.ic_pause);
+                seekMusic.setMax(mediaPlayer.getDuration());
+                updateSongEndTime(txtSongStop, mediaPlayer);
+                startAnimation(ivMusicLogo);
+
+                int audioSessionId = mediaPlayer.getAudioSessionId();
+                if (audioSessionId != -1) {
+                    visualizer.setAudioSessionId(audioSessionId);
+                }
+            }
+        });
+
+        btnPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                position = (position -  1) < 0  ? mySongs.size() - 1 : position - 1;
+
+                Uri u = Uri.parse(mySongs.get(position).toString());
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), u);
+                sName = mySongs.get(position).getName();
+                txtSongName.setText(sName);
+                mediaPlayer.start();
+                btnPlay.setBackgroundResource(R.drawable.ic_pause);
+                seekMusic.setMax(mediaPlayer.getDuration());
+                updateSongEndTime(txtSongStop, mediaPlayer);
+                startAnimation(ivMusicLogo);
+
+                int audioSessionId = mediaPlayer.getAudioSessionId();
+                if (audioSessionId != -1) {
+                    visualizer.setAudioSessionId(audioSessionId);
+                }
+            }
+        });
+
+        btnff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 10000);
+                }
+            }
+        });
+
+        btnfr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 10000);
+                }
+            }
+        });
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                btnNext.performClick();
+            }
+        });
+    }
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
+            musicService = binder.getService();
+            mIsBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicService = null;
+            mIsBound = false;
+        }
+    };
+
+    public void startAnimation(View view) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(ivMusicLogo, "rotation", 0f, 360f);
+        animator.setDuration(1000);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animator);
+        animatorSet.start();
+    }
+
+    public void updateSongEndTime(TextView textView, MediaPlayer mediaPlayer) {
+        String endTime = createTime(mediaPlayer.getDuration());
+        txtSongStop.setText(endTime);
+    }
+
+    public String createTime(int duration) {
+        String time = "";
+        int min = duration / 1000 / 60;
+        int sec = duration / 1000 % 60;
+
+        time += min + ":";
+
+        if (sec < 10) {
+            time += "0";
+        }
+
+        time += sec;
+
+        return time;
     }
 
     private void mapView() {
@@ -81,6 +305,8 @@ public class PlayerActivity extends AppCompatActivity {
         txtSongName = (TextView) findViewById(R.id.txtSongName);
         txtSongStart = (TextView) findViewById(R.id.txtMusicStart);
         txtSongStop = (TextView) findViewById(R.id.txtMusicStop);
+
+        ivMusicLogo = (ImageView) findViewById(R.id.ivMusicLogo);
 
         seekMusic = (SeekBar) findViewById(R.id.seekbar);
 
