@@ -25,8 +25,7 @@ public class ReadCountryJSON extends AsyncTask<String, Void, String> {
     private CountryAdapter adapter;
 
 
-    public ReadCountryJSON(CountryAdapter adapter, ArrayAdapter arrayAdapter, List<Country> countryList) {
-        this.adapter = adapter;
+    public ReadCountryJSON(ArrayAdapter arrayAdapter, List<Country> countryList) {
         this.arrayAdapter = arrayAdapter;
         this.countryList = countryList;
     }

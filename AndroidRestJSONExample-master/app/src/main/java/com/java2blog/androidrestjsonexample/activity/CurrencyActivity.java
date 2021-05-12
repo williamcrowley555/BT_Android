@@ -46,7 +46,6 @@ public class CurrencyActivity extends AppCompatActivity {
     private TextView tvResult;
     private Button btnSubmit;
     List<Country> countryList = new ArrayList<>();
-    CountryAdapter countryAdapter;
     ArrayAdapter adapter;
     String JSONPath = "http://api.geonames.org/countryInfoJSON?username=aporter";
 
@@ -57,14 +56,13 @@ public class CurrencyActivity extends AppCompatActivity {
 
         mapView();
 
-        countryAdapter = new CountryAdapter(this, R.layout.row_country, countryList);
         adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, new ArrayList());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerFromCurrency.setAdapter(adapter);
         spinnerToCurrency.setAdapter(adapter);
 
-        new ReadCountryJSON(countryAdapter, adapter, countryList).execute(JSONPath);
+        new ReadCountryJSON(adapter, countryList).execute(JSONPath);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
