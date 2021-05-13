@@ -66,6 +66,11 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+
 //        Bind MusicService
         Intent i = new Intent(PlayerActivity.this, MusicService.class);
         bindService(i, serviceConnection, BIND_AUTO_CREATE);
@@ -83,10 +88,6 @@ public class PlayerActivity extends AppCompatActivity {
             MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
             musicService = binder.getService();
 
-            if (musicService.getMediaPlayer() != null) {
-                musicService.stopMediaPlayer();
-            }
-
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
 
@@ -102,29 +103,8 @@ public class PlayerActivity extends AppCompatActivity {
 
             mediaPlayer = musicService.getMediaPlayer();
 
-//        Update current position of media player every 0.5s
-            updateSeekbar = new Thread() {
-                @Override
-                public void run() {
-                    int totalDuration = mediaPlayer.getDuration();
-                    int currentPosition = 0;
-
-                    while (currentPosition < totalDuration) {
-                        try {
-                            sleep(500);
-                            currentPosition = mediaPlayer.getCurrentPosition();
-                            seekMusic.setProgress(currentPosition);
-                        } catch (InterruptedException | IllegalStateException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            };
-
 //        Change seekbar's background color
             seekMusic.setMax(mediaPlayer.getDuration());
-            updateSeekbar.start();
             seekMusic.getProgressDrawable().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.MULTIPLY);
             seekMusic.getThumb().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_IN);
 
@@ -157,6 +137,9 @@ public class PlayerActivity extends AppCompatActivity {
                 public void run() {
                     String currentTime = createTime(mediaPlayer.getCurrentPosition());
                     txtSongStart.setText(currentTime);
+
+                    int currentPosition = mediaPlayer.getCurrentPosition();
+                    seekMusic.setProgress(currentPosition);
                     handler.postDelayed(this, delay);
                 }
             }, delay);
